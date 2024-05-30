@@ -2,7 +2,7 @@
 
 This configuration is centered around *DOOM Emacs* and is mainly used for the day to day of a CS major.
 
-[[docs/screenshot.png][Screenshot 1]]
+[[https://github.com/JoshuaMarkle/emacs/blob/main/docs/screenshot.png]]
 
 * Current State of This Configuration 🚧
 
