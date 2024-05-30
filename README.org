@@ -1,3 +1,23 @@
 #+title: Josh's Emacs Configuration
 
 This configuration is centered around *DOOM Emacs* and is mainly used for the day to day of a CS major.
+
+[[docs/screenshot.png][Screenshot 1]]
+
+* Current State of This Configuration 🚧
+
+This configuration is in a really early and experimental state of existence and is really me exploring all of the things Emacs can do. I aim for this config to target primarily note taking and programming. This are the two main aspects of my life that I aim to optimize to their fullest.
+
+** Current Features ✅
+
+- Tokyo Night! (the best theme)
+- Custom modeline, minimal with Vim like mode indication
+- Nice default variables :)
+
+** Intended Features ✨
+
+- An actually documented system for note taking, probably something Zettelkasten
+- A bunch more custom UI, this is what I most enjoyed programming in Neovim
+- Solid programming environment, very similar to Vim, mainly for Python & C++
+- R/RMarkdown + Unity + Flutter + Arduino support if I can
+- And many more ideas
