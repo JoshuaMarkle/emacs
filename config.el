@@ -81,7 +81,7 @@
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
 
-;;; Modeline
+;; Modeline
 ;; Change the default VIM mode identifier
 ;; Create a small box with NORMAL/INSERT/VISUAL etc
 (setq doom-modeline-height 35

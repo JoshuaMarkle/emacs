@@ -1,6 +1,6 @@
 #+title: Josh's Emacs Configuration
 
-This configuration is centered around *DOOM Emacs* and is mainly used for the day to day of a CS major.
+This configuration is centered around *DOOM Emacs* because *Vim* is awesome and is mainly used for the day to day of a CS major.
 
 [[https://github.com/JoshuaMarkle/emacs/blob/main/docs/screenshot.png]]
 
