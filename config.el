@@ -16,10 +16,15 @@
   :config
   (load-theme 'doom-tokyo-night t))
 
+; Dashboard
+(setq fancy-splash-image (concat doom-user-dir "emacs.png"))
+(remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-shortmenu)
+(remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-footer)
+
 ;; Org
-(setq org-directory "~/Sync/Notes/")
-(setq org-agenda-files (list "~/Sync/Notes/personal.org"
-                             "~/Sync/Notes/School/math.org"))
+(setq org-directory "~/sync/notes/")
+(setq org-agenda-files (list "~/sync/notes/personal.org"
+                             "~/sync/notes/school/math.org"))
 
 ;; Modeline
 (setq doom-modeline-height 35 ;; General Modeline config
@@ -28,8 +33,18 @@
       column-number-mode nil
       line-number-mode nil
       doom-modeline-buffer-encoding nil)
-(after! doom-modeline ;; Create custom VIM indicators
-  (doom-modeline-def-segment modals
+(after! doom-modeline
+  (setq auto-revert-check-vc-info t
+        doom-modeline-major-mode-icon nil
+        ;; doom-modeline-buffer-file-name-style 'relative-to-project
+        doom-modeline-github nil
+        doom-modeline-vcs-max-length 60)
+  (remove-hook 'doom-modeline-mode-hook #'size-indication-mode)
+  (doom-modeline-def-modeline 'main ; Custom minimal modeline
+    '(matches bar modals workspace-name window-number persp-name selection-info buffer-info remote-host debug matches)
+    '(vcs github mu4e grip gnus check misc-info repl lsp " "))
+
+  (doom-modeline-def-segment modals ;; Create custom VIM indicators
     "Displays modal editing states."
     (let* ((evil (when (bound-and-true-p evil-local-mode)
                    (let ((tag (cond
