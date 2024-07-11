@@ -2,7 +2,8 @@
 
 This configuration is centered around *DOOM Emacs* because *Vim* is awesome and is mainly used for the day to day of a CS major.
 
-[[https://github.com/JoshuaMarkle/emacs/blob/main/docs/screenshot.png]]
+[[https://github.com/JoshuaMarkle/emacs/blob/main/docs/screenshot1.png]]
+[[https://github.com/JoshuaMarkle/emacs/blob/main/docs/screenshot2.png]]
 
 * Current State of This Configuration 🚧
 
@@ -10,9 +11,14 @@ This configuration is in a really early and experimental state of existence and 
 
 ** Current Features ✅
 
-- Tokyo Night! (the best theme)
-- Custom modeline, minimal with Vim like mode indication
-- Nice default variables :)
+- Tweaked Tokyo Night! (the best theme)
+- Minimalized DOOM-Modeline with custom mode indicators
+- Competative programming environment
+  - `<leader>ec` Quickly run code in a terminal using
+  - `<normal-mode>p` Copy/Paste inputs
+  - `<normal-mode>c` Clear terminal
+  - Ability to manually input if needed too
+- Sensible defaults
 
 ** Intended Features ✨
 

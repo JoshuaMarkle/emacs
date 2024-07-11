@@ -11,8 +11,8 @@
 (setq-default tab-width 4)
 (setq-default indent-tabs-mode nil)
 (setq-default c-basic-offset 4)
-;;     lisp-body-indent 4
-;;     lisp-indent-offset 4)
+(setq-default lisp-body-indent 4
+              lisp-indent-offset 4)
 
 (display-line-numbers-mode)
 (setq display-line-numbers-type 'absolute)
@@ -82,13 +82,6 @@
                 xf
                 sep))))
 
-(after! (doom-modeline doom-themes)
-    (set-face-attribute 'doom-modeline-buffer-file nil :foreground (doom-color 'fg) :weight 'normal)
-    (set-face-attribute 'doom-modeline-project-dir nil :foreground (doom-color 'blue) :weight 'normal))
-    (set-face-attribute 'doom-modeline-bar nil :foreground (doom-color 'fg) :background (doom-color 'blue) :weight 'normal)
-    (set-face-attribute 'doom-modeline-panel nil :foreground (doom-color 'fg) :background (doom-color 'blue) :weight 'normal)
-    (set-face-attribute 'doom-modeline-highlight nil :foreground (doom-color 'fg) :background (doom-color 'blue) :weight 'normal)
-
 ;; Bury Compile Buffer
 (defun bury-compile-buffer-if-successful (buffer string)
     "Bury a compilation buffer if succeeded without warnings"
@@ -110,9 +103,6 @@
 ;; Rainbow mode everywhere
 (add-hook! prog-mode 'rainbow-mode)
 (add-hook! org-mode 'rainbow-mode)
-
-;; Diff HL
-(global-diff-hl-mode)
 
 ;; Vterm
 (use-package vterm
