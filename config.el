@@ -18,7 +18,6 @@
 
 ; Dashboard
 (setq fancy-splash-image (concat doom-user-dir "emacs.png"))
-(remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-shortmenu)
 (remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-footer)
 
 ;; Org
@@ -33,7 +32,10 @@
       column-number-mode nil
       line-number-mode nil
       doom-modeline-buffer-encoding nil)
-(after! doom-modeline
+(after! '(doom-modeline doom-theme)
+  (set-face-attribute 'doom-modeline-bar nil :background (doom-color 'blue) :foreground 'fg)
+  (set-face-attribute 'doom-modeline-highlight nil :background (doom-color 'blue) :foreground 'fg)
+  (set-face-attribute 'doom-modeline-panel nil :background (doom-color 'blue) :foreground 'fg)
   (setq auto-revert-check-vc-info t
         doom-modeline-major-mode-icon nil
         ;; doom-modeline-buffer-file-name-style 'relative-to-project
@@ -70,3 +72,42 @@
               (and ryo (concat ryo (and xf vsep)))
               xf
               sep))))
+
+; Competative Programming
+(map! :leader
+      (:prefix ("e" . "execute")
+        :desc "Run code in term"
+        "c" #'run-code-in-term))
+
+(defun run-code-in-term ()
+  "Run code in vterm"
+  (interactive)
+  (let ((file-name (buffer-file-name))
+        (target-vterm-buffer (or (get-buffer "*doom:vterm-popup:main*")
+                                 (get-buffer "*vterm*"))))
+    (unless target-vterm-buffer
+      (vterm)
+      (setq target-vterm-buffer (current-buffer))
+      (rename-buffer "*vterm*")) ; Rename to standard vterm
+    (switch-to-buffer-other-window target-vterm-buffer)
+    (cond
+     ((string-suffix-p ".py" file-name) ; Python
+      (vterm-send-string (format "python %s\n" file-name)))
+     ((string-suffix-p ".cpp" file-name) ; C++
+      (let ((output-file (file-name-sans-extension file-name)))
+        (vterm-send-string (format "g++ -o %s %s && %s\n" output-file file-name output-file))))
+     (t
+      (message "File type not supported for execution in vterm.")))))
+
+;; Vterm
+(use-package vterm
+  :ensure t
+  :config
+  (setq vterm-max-scrollback 100000
+        vterm-kill-buffer-on-exit t
+        vterm-shell "/bin/bash")
+  (evil-collection-define-key 'normal 'vterm-mode-map "c" #'vterm-clear)
+  (defun my/vterm-auto-insert ()
+    (when (eq major-mode 'vterm-mode)
+      (evil-insert 1)))
+  (advice-add 'vterm-send-return :after #'my/vterm-auto-insert))
