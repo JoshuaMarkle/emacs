@@ -1,43 +1,69 @@
-;;; Josh's Pretty Cool Emacs Config
+* Josh's Pretty Cool Emacs Config
 
-;; Personal Info
+** Personal Information
+
+#+BEGIN_SRC emacs-lisp
 (setq user-full-name "Joshua Markle"
     user-mail-address "joshuamarkle25@gmail.com")
+#+END_SRC
 
-;; Fonts
+** Fonts
+
+#+BEGIN_SRC emacs-lisp
 (setq doom-font (font-spec :family "CaskaydiaMono Nerd Font" :size 13))
+#+END_SRC
 
-;; Vanilia++
+** General Variables
+
+#+BEGIN_SRC emacs-lisp
 (setq-default tab-width 4)
 (setq-default indent-tabs-mode nil)
 (setq-default c-basic-offset 4)
 (setq-default lisp-body-indent 4
               lisp-indent-offset 4)
 
-(display-line-numbers-mode)
+(global-display-line-numbers-mode)
 (setq display-line-numbers-type 'absolute)
 (dolist (mode '(org-mode-hook
                 term-mode-hook
                 shell-mode-hook
                 eshell-mode-hook))
   (add-hook mode (lambda () (display-line-numbers-mode 0))))
+#+END_SRC
 
-;; Theme
+** Theme
+
+I use a custom tokyonight theme that I think looks better
+
+#+BEGIN_SRC emacs-lisp
 (use-package doom-themes
     :ensure t
     :config
     (load-theme 'tokyo-night t))
+#+END_SRC
 
-; Dashboard
+** Dashboard
+
+Nice and simple dashboard
+
+#+BEGIN_SRC emacs-lisp
 (setq fancy-splash-image (concat doom-user-dir "emacs.png"))
 (remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-footer)
+#+END_SRC
 
-;; Org
+** Org
+
+#+BEGIN_SRC emacs-lisp
 (setq org-directory "~/sync/notes/")
 (setq org-agenda-files (list "~/sync/notes/personal.org"
                            "~/sync/notes/school/math.org"))
+#+END_SRC
 
-;; Modeline
+** Modeline
+
+A minimal modeline with custom vim (major mode) indicators
+
+#+BEGIN_SRC emacs-lisp
 (setq doom-modeline-height 35 ;; General Modeline config
     doom-modeline-mode-icon nil
     size-indication-mode nil
@@ -81,8 +107,11 @@
                 (and ryo (concat ryo (and xf vsep)))
                 xf
                 sep))))
+#+END_SRC
 
-;; Bury Compile Buffer
+** Bury Compile Buffer
+
+#+BEGIN_SRC emacs-lisp
 (defun bury-compile-buffer-if-successful (buffer string)
     "Bury a compilation buffer if succeeded without warnings"
     (when (and (eq major-mode 'comint-mode)
@@ -99,50 +128,89 @@
             buffer)))
 
 (add-hook 'compilation-finish-functions #'bury-compile-buffer-if-successful)
+#+END_SRC
 
-;; Rainbow mode everywhere
+** Rainbow Mode
+
+#+BEGIN_SRC emacs-lisp
 (add-hook! prog-mode 'rainbow-mode)
 (add-hook! org-mode 'rainbow-mode)
+#+END_SRC
 
-;; Vterm
-(use-package vterm
-  :ensure t
-  :config
-  (setq vterm-max-scrollback 100000
-        vterm-kill-buffer-on-exit t
-        vterm-shell "/bin/bash")
-  (evil-collection-define-key 'normal 'vterm-mode-map "c" #'vterm-clear)
-  (defun my/vterm-auto-insert ()
-    (when (eq major-mode 'vterm-mode)
-      (evil-insert 1)))
-  (advice-add 'vterm-send-return :after #'my/vterm-auto-insert))
+** Competative Programming
 
+It turns out compiling code normally doesn't work well with user input so I run my code in the vterm.
 
+The scratch buffer is used as a place to put large input text and can automatically be pasted as input into the running program with =<leader>es=.
 
-;; MAPPINGS
-
-;; Competative Programming
+#+BEGIN_SRC emacs-lisp
 (map! :leader
       (:prefix ("e" . "execute")
-        :desc "Run code in term"
-        "c" #'run-code-in-term))
+        :desc "Run code in term" "c" #'run-code-in-term
+        :desc "Run code in term using scratch" "s" (lambda () (interactive) (run-code-in-term t))))
 
-(defun run-code-in-term ()
-  "Run code in vterm"
-  (interactive)
-  (let ((file-name (buffer-file-name))
-        (target-vterm-buffer (or (get-buffer "*doom:vterm-popup:main*")
-                                 (get-buffer "*vterm*"))))
-    (unless target-vterm-buffer
-      (vterm)
-      (setq target-vterm-buffer (current-buffer))
-      (rename-buffer "*vterm*")) ; Rename to standard vterm
-    (switch-to-buffer-other-window target-vterm-buffer)
-    (cond
-     ((string-suffix-p ".py" file-name) ; Python
-      (vterm-send-string (format "python %s\n" file-name)))
-     ((string-suffix-p ".cpp" file-name) ; C++
-      (let ((output-file (file-name-sans-extension file-name)))
-        (vterm-send-string (format "g++ -o %s %s && %s\n" output-file file-name output-file))))
-     (t
-      (message "File type not supported for execution in vterm.")))))
+(defun run-code-in-term (use-scratch)
+    (interactive "P") ; Prompt prefix (for scratch buffer grabbing)
+
+    ; Detect any open terminals
+    (let ((file-name (buffer-file-name))
+             (target-vterm-buffer (or (get-buffer "*doom:vterm-popup:main*")
+                                      (get-buffer "*vterm*")))
+             (scratch-content (when use-scratch
+                                  (with-current-buffer "*doom:scratch*"
+                                      (buffer-string))))) ; Get scratch content only if use-scratch is true
+        (unless target-vterm-buffer
+            (vterm)
+            (setq target-vterm-buffer (current-buffer))
+            (rename-buffer "*vterm*")) ; Rename to standard vterm
+        (switch-to-buffer-other-window target-vterm-buffer)
+        (cond
+
+            ; Automatically run singular file
+            ((string-suffix-p ".py" file-name) ; Python
+                (vterm-send-string (format "python %s\n" file-name))
+                (when use-scratch (vterm-send-string scratch-content)))
+            ((string-suffix-p ".cpp" file-name) ; C++
+                (let ((output-file (file-name-sans-extension file-name)))
+                    (vterm-send-string (format "g++ -o %s %s && %s\n" output-file file-name output-file))
+                    (when use-scratch (vterm-send-string scratch-content))))
+            (t
+                (message "File type not supported")))))
+#+END_SRC
+
+** Vterm
+
+Make this terminal work well with the Competative Programming section. It can:
+
+- =p= Paste
+- =c= Clear
+- =s= Paste from scratch buffer
+
+#+BEGIN_SRC emacs-lisp
+(use-package vterm
+    :ensure t
+    :config
+    (setq vterm-max-scrollback 100000
+        vterm-kill-buffer-on-exit t
+        vterm-shell "/bin/bash"
+        vterm-prompt-regexp "  .* ") ; My prompts typically look like this
+
+    ; Clear term mapping
+    (evil-collection-define-key 'normal 'vterm-mode-map "c" #'vterm-clear)
+
+    ; Paste content from scratch buffer (used for large code inputs)
+    (evil-collection-define-key 'normal 'vterm-mode-map "s" #'paste-from-scratch)
+    (defun paste-from-scratch ()
+        (interactive)
+        (if (eq major-mode 'vterm-mode)
+            (let ((scratch-coterm-send-return))  ; Optionally send return to execute the command
+            (message "Not in a vterm buffer!")))
+
+    ; Enter insert mode after exec
+    (defun my/vterm-auto-insert ()
+        (when (eq major-mode 'vterm-mode)
+            (evil-insert 1)))
+    (advice-add 'vterm-send-return :after #'my/vterm-auto-insert))
+#+END_SRC
+
+Back to [[file:README.org][README]]
