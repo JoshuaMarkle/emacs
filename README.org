@@ -11,18 +11,20 @@ This configuration is in a really early and experimental state of existence and 
 
 ** Current Features ✅
 
-- Tweaked Tokyo Night! (the best theme)
+- Custom Tokyo Night theme! (the best theme)
 - Minimalized DOOM-Modeline with custom mode indicators
 - Competative programming environment
   - Run code quickly
   - Better user input system
-  - And more [[file:config.org::*Competative Programming][here]]
+  - And more within the config
 - Sensible defaults
 
 ** Intended Features ✨
 
+I am kinda trying to recreate the Neovim experience but better
+
 - An actually documented system for note taking, probably something Zettelkasten
 - A bunch more custom UI, this is what I most enjoyed programming in Neovim
-- Solid programming environment, very similar to Vim, mainly for Python & C++
+- Solid programming environment, very similar to Vim, mainly for Python & C++ (almost there)
 - R/RMarkdown + Unity + Flutter + Arduino support if I can
 - And many more ideas

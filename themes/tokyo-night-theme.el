@@ -4,8 +4,6 @@
 ;; This theme is largely based on the doom-tokyo-night-theme built into doom emacs:
 ;; Author: FosterHangdaan <https://github.com/FosterHangdaan>
 ;; Source: https://github.com/enkia/tokyo-night-vscode-theme
-;;
-;; Commentary:
 
 (require 'doom-themes)
 
@@ -150,12 +148,13 @@
             :foreground doc-comments)
 
     ;; Doom modeline
-        (doom-modeline-buffer-dir :foreground blue :weight 'normal)
+        (doom-modeline-project-dir :foreground blue :weight 'normal)
         (doom-modeline-buffer-path :foreground fg :weight 'normal)
         (doom-modeline-buffer-file :foreground fg :weight 'normal)
         (doom-modeline-bar :background blue :foreground bg)
         (doom-modeline-panel :background blue :foreground bg :weight 'normal)
         (doom-modeline-highlight :background blue :foreground bg)
+        (doom-modeline-info :foreground dark-green)
 
         (mode-line
             :background modeline-bg :foreground modeline-fg
