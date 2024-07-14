@@ -13,14 +13,14 @@
 (setq doom-font (font-spec :family "CaskaydiaMono Nerd Font" :size 13))
 #+END_SRC
 
-** General Variables
+** General Improvements
 
 #+BEGIN_SRC emacs-lisp
 ; Tabs
-(setq-default tab-width 4)
-(setq-default indent-tabs-mode nil)
-(setq-default c-basic-offset 4)
-(setq-default lisp-body-indent 4
+(setq-default tab-width 4
+    indent-tabs-mode nil
+    c-basic-offset 4
+    lisp-body-indent 4
     lisp-indent-offset 4)
 
 ; Add line numbers only in programming mode
@@ -47,10 +47,11 @@ Nice and simple dashboard
 (setq fancy-splash-image (concat doom-user-dir "emacs.png"))
 (remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-footer)
 
-(defun my/hide-modeline-in-doom-buffer ()
+; Hide modeline on dashboard
+(defun hide-modeline-in-dashboard ()
   (when (string-equal (buffer-name) "*doom*")
     (setq mode-line-format nil)))
-(add-hook 'buffer-list-update-hook 'my/hide-modeline-in-doom-buffer)
+(add-hook 'buffer-list-update-hook 'hide-modeline-in-dashboard)
 #+END_SRC
 
 ** Org
@@ -59,6 +60,42 @@ Nice and simple dashboard
 (setq org-directory "~/sync/notes/")
 (setq org-agenda-files (list "~/sync/notes/personal.org"
                            "~/sync/notes/school/math.org"))
+
+; Extra org preferences
+(setq org-startup-with-inline-images t)
+#+END_SRC
+
+*** LaTex Exports
+
+This is for exporting org files into pdf files!
+
+#+BEGIN_SRC emacs-lisp
+(use-package org
+  :config
+  (setq org-latex-classes
+        '(("notes"
+           "\\documentclass{notes}
+           [NO-DEFAULT-PACKAGES]
+           [PACKAGES]
+           [EXTRA]"
+           ("\\section{%s}" . "\\section*{%s}")
+           ("\\subsection{%s}" . "\\subsection*{%s}")
+           ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+           ("\\paragraph{%s}" . "\\paragraph*{%s}")
+           ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
+
+  (setq org-latex-compiler "xelatex") ; For custom fonts
+  (setq org-export-headline-levels 4) ; Ensure correct headings
+  (setq org-latex-pdf-process
+        '("xelatex -shell-escape -interaction nonstopmode -output-directory %o %f"
+          "xelatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
+  (setq org-latex-listings 'minted) ; Fancy code blocks
+  (add-to-list 'org-latex-packages-alist '("" "minted")))
+
+;; Mapping to export note as pdf
+(map! :leader
+      (:prefix ("n" . "notes")
+        :desc "Export note as PDF" "e" #'org-latex-export-to-pdf))
 #+END_SRC
 
 ** Modeline
@@ -66,7 +103,7 @@ Nice and simple dashboard
 A minimal modeline with custom vim (major mode) indicators
 
 #+BEGIN_SRC emacs-lisp
-(setq doom-modeline-height 35 ;; General Modeline config
+(setq doom-modeline-height 35
     doom-modeline-mode-icon nil
     size-indication-mode nil
     column-number-mode nil
@@ -76,14 +113,17 @@ A minimal modeline with custom vim (major mode) indicators
 (after! doom-modeline
     (setq auto-revert-check-vc-info t
         doom-modeline-major-mode-icon nil
-        ;; doom-modeline-buffer-file-name-style 'relative-to-project
         doom-modeline-github nil
         doom-modeline-vcs-max-length 60)
     (remove-hook 'doom-modeline-mode-hook #'size-indication-mode)
-    (doom-modeline-def-modeline 'main ; Custom minimal modeline
+
+    ; Custom minimal modeline
+    (doom-modeline-def-modeline 'main
         '(matches bar modals workspace-name window-number persp-name selection-info buffer-info remote-host debug)
         '(vcs github mu4e grip gnus check misc-info repl lsp " "))
-    (doom-modeline-def-segment modals ;; Create custom VIM indicators
+
+    ; Create custom VIM indicators
+    (doom-modeline-def-segment modals
         "Displays modal editing states."
         (let* ((evil (when (bound-and-true-p evil-local-mode)
                          (let ((tag (cond
@@ -209,3 +249,17 @@ Make this terminal work well with the Competative Programming section. It can:
 #+END_SRC
 
 Back to [[https://github.com/JoshuaMarkle/emacs][README]]
+
+
+
+** Mappings
+
+#+BEGIN_SRC emacs-lisp
+(after! evil
+    (general-define-key
+    :states 'normal
+    "C-h" 'evil-window-left
+    "C-j" 'evil-window-down
+    "C-k" 'evil-window-up
+    "C-l" 'evil-window-right))
+#+END_SRC
