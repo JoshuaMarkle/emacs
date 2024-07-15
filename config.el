@@ -1,21 +1,8 @@
-* Josh's Pretty Cool Emacs Config
-
-** Personal Information
-
-#+BEGIN_SRC emacs-lisp
 (setq user-full-name "Joshua Markle"
     user-mail-address "joshuamarkle25@gmail.com")
-#+END_SRC
 
-** Fonts
-
-#+BEGIN_SRC emacs-lisp
 (setq doom-font (font-spec :family "CaskaydiaMono Nerd Font" :size 13))
-#+END_SRC
 
-** General Improvements
-
-#+BEGIN_SRC emacs-lisp
 ; Tabs
 (setq-default tab-width 4
     indent-tabs-mode nil
@@ -26,24 +13,12 @@
 ; Add line numbers only in programming mode
 (add-hook 'prog-mode-hook (lambda () (display-line-numbers-mode t)))
 (setq display-line-numbers-type 'absolute)
-#+END_SRC
 
-** Theme
-
-I use a custom tokyonight theme that I think looks better
-
-#+BEGIN_SRC emacs-lisp
 (use-package doom-themes
     :ensure t
     :config
     (load-theme 'tokyo-night t))
-#+END_SRC
 
-** Dashboard
-
-Nice and simple dashboard
-
-#+BEGIN_SRC emacs-lisp
 (setq fancy-splash-image (concat doom-user-dir "emacs.png"))
 (remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-footer)
 
@@ -52,24 +27,14 @@ Nice and simple dashboard
   (when (string-equal (buffer-name) "*doom*")
     (setq mode-line-format nil)))
 (add-hook 'buffer-list-update-hook 'hide-modeline-in-dashboard)
-#+END_SRC
 
-** Org
-
-#+BEGIN_SRC emacs-lisp
 (setq org-directory "~/sync/notes/")
 (setq org-agenda-files (list "~/sync/notes/personal.org"
                            "~/sync/notes/school/math.org"))
 
 ; Extra org preferences
 (setq org-startup-with-inline-images t)
-#+END_SRC
 
-*** LaTex Exports
-
-This is for exporting org files into pdf files!
-
-#+BEGIN_SRC emacs-lisp
 (use-package org
   :config
   (setq org-latex-classes
@@ -96,13 +61,7 @@ This is for exporting org files into pdf files!
 (map! :leader
       (:prefix ("n" . "notes")
         :desc "Export note as PDF" "e" #'org-latex-export-to-pdf))
-#+END_SRC
 
-** Modeline
-
-A minimal modeline with custom vim (major mode) indicators
-
-#+BEGIN_SRC emacs-lisp
 (setq doom-modeline-height 35
     doom-modeline-mode-icon nil
     size-indication-mode nil
@@ -149,11 +108,7 @@ A minimal modeline with custom vim (major mode) indicators
                 (and ryo (concat ryo (and xf vsep)))
                 xf
                 sep))))
-#+END_SRC
 
-** Bury Compile Buffer
-
-#+BEGIN_SRC emacs-lisp
 (defun bury-compile-buffer-if-successful (buffer string)
     "Bury a compilation buffer if succeeded without warnings"
     (when (and (eq major-mode 'comint-mode)
@@ -170,15 +125,7 @@ A minimal modeline with custom vim (major mode) indicators
             buffer)))
 
 (add-hook 'compilation-finish-functions #'bury-compile-buffer-if-successful)
-#+END_SRC
 
-** Competative Programming
-
-It turns out compiling code normally doesn't work well with user input so I run my code in the vterm.
-
-The scratch buffer is used as a place to put large input text and can automatically be pasted as input into the running program with =<leader>es=.
-
-#+BEGIN_SRC emacs-lisp
 (map! :leader
       (:prefix ("e" . "execute")
         :desc "Run code in term" "c" #'run-code-in-term
@@ -211,17 +158,7 @@ The scratch buffer is used as a place to put large input text and can automatica
                     (when use-scratch (vterm-send-string scratch-content))))
             (t
                 (message "File type not supported")))))
-#+END_SRC
 
-** Vterm
-
-Make this terminal work well with the Competative Programming section. It can:
-
-- =c= Clear
-- =p= Paste
-- =s= Paste from scratch buffer
-
-#+BEGIN_SRC emacs-lisp
 (use-package vterm
     :ensure t
     :config
@@ -246,15 +183,7 @@ Make this terminal work well with the Competative Programming section. It can:
         (when (eq major-mode 'vterm-mode)
             (evil-insert 1)))
     (advice-add 'vterm-send-return :after #'my/vterm-auto-insert))
-#+END_SRC
 
-Back to [[https://github.com/JoshuaMarkle/emacs][README]]
-
-
-
-** Mappings
-
-#+BEGIN_SRC emacs-lisp
 (after! evil
     (general-define-key
     :states 'normal
@@ -262,4 +191,3 @@ Back to [[https://github.com/JoshuaMarkle/emacs][README]]
     "C-j" 'evil-window-down
     "C-k" 'evil-window-up
     "C-l" 'evil-window-right))
-#+END_SRC
