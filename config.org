@@ -98,6 +98,27 @@ This is for exporting org files into pdf files!
         :desc "Export note as PDF" "e" #'org-latex-export-to-pdf))
 #+END_SRC
 
+** LSP
+
+#+BEGIN_SRC emacs-lisp
+(use-package lsp-ui
+  :hook (lsp-mode . lsp-ui-mode))
+
+;; View documentation
+(setq lsp-ui-doc-enable t)
+(setq lsp-ui-doc-show-with-cursor t)
+(setq lsp-ui-doc-show-with-mouse t)
+(setq lsp-ui-doc-position 'bottom)
+
+;; LSP on the right side
+(setq lsp-ui-sideline-enable t)
+(setq lsp-ui-sideline-show-hover t)
+
+;; Better treemacs
+(use-package lsp-treemacs
+  :after lsp)
+#+END_SRC
+
 ** Modeline
 
 A minimal modeline with custom vim (major mode) indicators

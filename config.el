@@ -62,6 +62,23 @@
       (:prefix ("n" . "notes")
         :desc "Export note as PDF" "e" #'org-latex-export-to-pdf))
 
+(use-package lsp-ui
+  :hook (lsp-mode . lsp-ui-mode))
+
+;; View documentation
+(setq lsp-ui-doc-enable t)
+(setq lsp-ui-doc-show-with-cursor t)
+(setq lsp-ui-doc-show-with-mouse t)
+(setq lsp-ui-doc-position 'bottom)
+
+;; LSP on the right side
+(setq lsp-ui-sideline-enable t)
+(setq lsp-ui-sideline-show-hover t)
+
+;; Better treemacs
+(use-package lsp-treemacs
+  :after lsp)
+
 (setq doom-modeline-height 35
     doom-modeline-mode-icon nil
     size-indication-mode nil
