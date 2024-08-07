@@ -93,8 +93,6 @@
 (use-package lsp-treemacs
   :after lsp)
 
-
-
 (setq doom-modeline-height 35
     doom-modeline-mode-icon nil
     size-indication-mode nil

@@ -133,11 +133,6 @@ This is for exporting org files into pdf files!
   :after lsp)
 #+END_SRC
 
-** Formatting
-
-#+BEGIN_SRC emacs-lisp
-#+END_SRC
-
 ** Modeline
 
 A minimal modeline with custom vim (major mode) indicators
