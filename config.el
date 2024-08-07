@@ -62,22 +62,38 @@
       (:prefix ("n" . "notes")
         :desc "Export note as PDF" "e" #'org-latex-export-to-pdf))
 
+;; LSP Mode Configuration
+(use-package lsp-mode
+  :commands (lsp lsp-deferred)
+  :hook ((js-mode . lsp)
+         (typescript-mode . lsp))
+  :init
+  (setq lsp-prefer-flymake nil))
+
+;; LSP UI Configuration
 (use-package lsp-ui
-  :hook (lsp-mode . lsp-ui-mode))
+  :hook (lsp-mode . lsp-ui-mode)
+  :config
 
-;; View documentation
-(setq lsp-ui-doc-enable t)
-(setq lsp-ui-doc-show-with-cursor t)
-(setq lsp-ui-doc-show-with-mouse t)
-(setq lsp-ui-doc-position 'bottom)
+  ;; View documentation
+  (setq lsp-ui-doc-enable t)
+  (setq lsp-ui-doc-show-with-cursor t)
+  (setq lsp-ui-doc-show-with-mouse t)
+  (setq lsp-ui-doc-position 'bottom)
 
-;; LSP on the right side
-(setq lsp-ui-sideline-enable t)
-(setq lsp-ui-sideline-show-hover t)
+  ;; LSP on the right side
+  (setq lsp-ui-sideline-enable t)
+  (setq lsp-ui-sideline-show-hover t)
+  (setq lsp-ui-sideline-show-diagnostics t)
+  (setq lsp-ui-sideline-show-code-actions t)
+  (setq lsp-ui-sideline-show-update-mode t)
+  (add-hook 'prog-mode-hook 'lsp-ui-sideline-mode))
 
-;; Better treemacs
+;; Better Treemacs integration with LSP
 (use-package lsp-treemacs
   :after lsp)
+
+
 
 (setq doom-modeline-height 35
     doom-modeline-mode-icon nil
