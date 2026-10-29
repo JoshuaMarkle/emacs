@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="style.css">
+<style>
+  .head { position: absolute; left: 70px; top: 52px; width: 760px; }
+  .head .kicker { font-size: 14px; }
+  .head .title { font-size: 46px; line-height: 54px; margin-top: 14px; }
+  .head .sub { margin-top: 14px; font-size: 18px; color: var(--violet); }
+
+  .steps { position: absolute; right: 70px; top: 62px; display: flex; align-items: stretch; gap: 18px; }
+  .step { width: 270px; background: rgba(22,22,30,0.85); border: 1px solid var(--base0); padding: 16px 18px; font-size: 14px; line-height: 21px; }
+  .step .hd { display: flex; align-items: center; gap: 10px; color: var(--fg-alt); font-size: 15px; margin-bottom: 8px; }
+  .step .num { display: grid; place-items: center; width: 26px; height: 26px; color: var(--bg-dark); font-weight: 700; }
+  .step:nth-child(1) .num { background: var(--yellow); }
+  .step:nth-child(3) .num { background: var(--blue); }
+  .step:nth-child(5) .num { background: var(--dgreen); }
+  .arrow { color: var(--base1); font-size: 22px; align-self: center; }
+  .step .key { font-size: 14px; padding: 1px 8px; }
+
+  .frame.main { left: 60px; top: 262px; width: 1800px; height: 782px; font-size: 17px; line-height: 25px; }
+  .frame.main .code .n { width: 48px; }
+
+  .left  { left: 0; top: 0; width: 1000px; height: 650px; }
+  .vsplit { left: 1000px; top: 0; height: 684px; }
+  .scratch { left: 1002px; top: 0; right: 0; height: 196px; }
+  .term { left: 1002px; top: 230px; right: 0; height: 420px; padding: 10px 14px; font-size: 16px; line-height: 23px; white-space: pre; }
+  .term .dir { color: var(--blue); font-weight: 700; }
+  .term .arr { color: var(--blue); }
+  .term .out { color: var(--fg-alt); }
+
+  .whichkey {
+    position: absolute; left: 0; right: 0; top: 684px; height: 74px;
+    background: var(--bg-alt); border-top: 1px solid #22232f;
+    display: grid; grid-template-columns: repeat(3, 1fr); padding: 14px 30px; gap: 6px 40px; font-size: 16px;
+  }
+  .whichkey .wk-k { color: var(--orange); margin-right: 10px; }
+  .whichkey .wk-arrow { color: var(--base1); margin-right: 10px; }
+  .whichkey .wk-d { color: var(--blue); }
+  .whichkey .sel .wk-d { color: var(--fg-alt); background: #2e3c64; padding: 0 4px; }
+</style>
+</head>
+<body>
+<div class="wallpaper"></div>
+
+<div class="head">
+  <div class="kicker">Josh's Pretty Cool Emacs Config</div>
+  <div class="title">Competitive programming,<br><span class="accent">two keystrokes</span> from done.</div>
+</div>
+
+<div class="steps">
+  <div class="step">
+    <div class="hd"><span class="num">1</span>Paste the test input</div>
+    Drop a big sample into <span class="y">*scratch*</span> once and keep iterating.
+  </div>
+  <div class="arrow">&#xf061;</div>
+  <div class="step">
+    <div class="hd"><span class="num">2</span>Hit <span class="key">SPC e s</span></div>
+    <span class="v">g++</span> or <span class="v">python</span> is picked from the file extension.
+  </div>
+  <div class="arrow">&#xf061;</div>
+  <div class="step">
+    <div class="hd"><span class="num">3</span>Answer in vterm</div>
+    Scratch is piped to stdin and the terminal drops straight into <span class="g">INSERT</span>.
+  </div>
+</div>
+
+<div class="frame main">
+  <!-- main.cpp -->
+  <div class="buffer code left">
+<div class="ln"><span class="n">1</span><span class="c">// Increasing Array</span></div>
+<div class="ln"><span class="n">2</span><span class="c">// Given an array, what is the minimum number of moves to make an increasing array</span></div>
+<div class="ln"><span class="n">3</span></div>
+<div class="ln"><span class="n">4</span><span class="p">#include</span><span class="s">&lt;iostream&gt;</span></div>
+<div class="ln"><span class="n">5</span><span class="p">#include</span><span class="s">&lt;vector&gt;</span></div>
+<div class="ln"><span class="n">6</span></div>
+<div class="ln"><span class="n">7</span><span class="k">using namespace</span> <span class="t">std</span>;</div>
+<div class="ln"><span class="n">8</span></div>
+<div class="ln"><span class="n">9</span><span class="k">int</span> <span class="f">main</span>() {</div>
+<div class="ln"><span class="n">10</span>    <span class="k">int</span> <span class="v">n</span>;</div>
+<div class="ln"><span class="n">11</span>    cin <span class="p">&gt;&gt;</span> n;</div>
+<div class="ln"><span class="n">12</span>    <span class="t">vector</span>&lt;<span class="k">long long</span>&gt; <span class="v">arr</span>(n);</div>
+<div class="ln"><span class="n">13</span>    <span class="k">for</span> (<span class="k">auto</span> &amp;<span class="v">x</span> : arr) cin <span class="p">&gt;&gt;</span> x;</div>
+<div class="ln"><span class="n">14</span></div>
+<div class="ln"><span class="n">15</span>    <span class="k">long long</span> <span class="v">ans</span> = <span class="nm">0</span>;</div>
+<div class="ln"><span class="n">16</span>    <span class="k">for</span> (<span class="k">int</span> <span class="v">i</span> = <span class="nm">1</span>; i &lt; n; i++) {</div>
+<div class="ln"><span class="n">17</span>        <span class="k">long long</span> <span class="v">diff</span> = arr[i<span class="p">-</span><span class="nm">1</span>] <span class="p">-</span> arr[i];</div>
+<div class="ln"><span class="n">18</span>        <span class="k">if</span> (diff <span class="p">&gt;</span> <span class="nm">0</span>) {</div>
+<div class="ln"><span class="n">19</span>            ans <span class="p">+=</span> diff;</div>
+<div class="ln"><span class="n">20</span>            arr[i] <span class="p">+=</span> diff;</div>
+<div class="ln"><span class="n">21</span>        }</div>
+<div class="ln"><span class="n">22</span>    }</div>
+<div class="ln"><span class="n">23</span>    cout <span class="p">&lt;&lt;</span> ans <span class="p">&lt;&lt;</span> endl;</div>
+<div class="ln cur"><span class="n">24</span>    <span class="k">return</span> <span class="nm">0</span><span class="cursor">;</span></div>
+<div class="ln"><span class="n">25</span>}</div>
+<div class="ln"><span class="n" style="color:var(--base0)">~</span></div>
+<div class="ln"><span class="n" style="color:var(--base0)">~</span></div>
+<div class="ln"><span class="n" style="color:var(--base0)">~</span></div>
+<div class="ln"><span class="n" style="color:var(--base0)">~</span></div>
+<div class="ln"><span class="n" style="color:var(--base0)">~</span></div>
+<div class="ln"><span class="n" style="color:var(--base0)">~</span></div>
+<div class="ln"><span class="n" style="color:var(--base0)">~</span></div>
+<div class="ln"><span class="n" style="color:var(--base0)">~</span></div>
+<div class="ln"><span class="n" style="color:var(--base0)">~</span></div>
+<div class="ln"><span class="n" style="color:var(--base0)">~</span></div>
+<div class="ln"><span class="n" style="color:var(--base0)">~</span></div>
+  </div>
+  <div class="modeline" style="left:0;width:1000px;top:650px"><span class="pill normal">NORMAL</span><span class="file"><span class="dir">downloads/</span>main.cpp</span><span class="right"><span class="vcs">&#xe0a0; main</span><span class="ok">&#xf058;</span></span></div>
+
+  <div class="vsplit"></div>
+
+  <!-- *scratch* -->
+  <div class="buffer code scratch">
+<div class="ln"><span class="n">1</span><span class="nm">5</span></div>
+<div class="ln"><span class="n">2</span><span class="nm">3 2 5 1 7</span></div>
+<div class="ln"><span class="n" style="color:var(--base0)">~</span></div>
+<div class="ln"><span class="n" style="color:var(--base0)">~</span></div>
+<div class="ln"><span class="n" style="color:var(--base0)">~</span></div>
+<div class="ln"><span class="n" style="color:var(--base0)">~</span></div>
+<div class="ln"><span class="n" style="color:var(--base0)">~</span></div>
+<div class="ln"><span class="n" style="color:var(--base0)">~</span></div>
+<div class="ln"><span class="n" style="color:var(--base0)">~</span></div>
+<div class="ln"><span class="n" style="color:var(--base0)">~</span></div>
+  </div>
+  <div class="modeline inactive" style="left:1002px;right:0;top:196px"><span class="pill normal" style="opacity:.5">NORMAL</span><span class="file y">*doom:scratch*</span></div>
+
+  <!-- vterm -->
+  <div class="buffer term"><span class="dir">&#xf07b; ~/downloads</span> <span class="arr">&#xf054;</span> lt
+<span class="c">.</span>
+<span class="c">├──</span> <span class="g">main</span>
+<span class="c">├──</span> <span class="y">main.cpp</span>
+<span class="c">└──</span> <span class="y">main.py</span>
+<span class="dir">&#xf07b; ~/downloads</span> <span class="arr">&#xf054;</span> g++ -o ~/downloads/main ~/downloads/main.cpp &amp;&amp; ~/downloads/main
+<span class="c">5</span>
+<span class="c">3 2 5 1 7</span>
+<span class="out">5</span>
+<span class="dir">&#xf07b; ~/downloads</span> <span class="arr">&#xf054;</span> <span class="cursor"> </span></div>
+  <div class="modeline" style="left:1002px;right:0;top:650px"><span class="pill insert">INSERT</span><span class="file">*vterm*</span><span class="right"><span class="vcs">&#xe0a0; main</span></span></div>
+
+  <!-- which-key popup -->
+  <div class="whichkey">
+    <div><span class="wk-k">c</span><span class="wk-arrow">&#x2192;</span><span class="wk-d">Run code in term</span></div>
+    <div class="sel"><span class="wk-k">s</span><span class="wk-arrow">&#x2192;</span><span class="wk-d">Run code in term using scratch</span></div>
+    <div></div>
+  </div>
+  <div class="echo" style="left:0;right:0;bottom:0">SPC e-</div>
+</div>
+</body>
+</html>

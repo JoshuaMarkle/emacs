@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="style.css">
+<style>
+  .frame.lsp { left: 22px; top: 80px; width: 1290px; height: 980px; font-size: 16px; line-height: 25px; }
+  .frame.lsp .code .n { width: 48px; }
+  .ed { left: 0; top: 0; right: 0; height: 742px; }
+  .ln { position: relative; }
+  .side { position: absolute; right: 18px; font-style: normal; font-size: 14px; }
+  .side .tag { padding: 1px 8px; }
+  .side.err { color: var(--red); }
+  .side.err .tag { background: rgba(247,118,142,0.12); }
+  .side.act { color: var(--yellow); }
+  .side.act .tag { background: rgba(224,175,104,0.12); }
+  .side.hov { color: var(--base4); }
+  .side.hov .tag { background: rgba(65,72,104,0.35); }
+  .squig { text-decoration: underline wavy var(--red); text-underline-offset: 4px; }
+
+  .company {
+    position: absolute; left: 290px; top: 506px; width: 420px;
+    background: #1f2335; border: 1px solid var(--base0); font-size: 15px; line-height: 25px;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.45);
+  }
+  .company div { display: flex; padding: 0 10px; white-space: pre; }
+  .company .ic { color: var(--magenta); width: 26px; }
+  .company .ty { margin-left: auto; color: var(--base1); }
+  .company .sel { background: #2e3c64; color: var(--fg-alt); }
+  .company .m { color: var(--blue); font-weight: 700; }
+
+  .doc {
+    position: absolute; left: 0; right: 0; top: 742px; height: 180px;
+    background: var(--bg-alt); border-top: 1px solid #2e3c64; padding: 14px 22px; font-size: 15px; line-height: 23px;
+  }
+  .doc .sig { color: var(--fg-alt); }
+  .doc hr { border: 0; border-top: 1px solid #22232f; margin: 10px 0; }
+  .doc .body { color: var(--violet); }
+
+  .copy { position: absolute; left: 1380px; top: 120px; width: 470px; }
+  .copy .title { font-size: 52px; line-height: 60px; margin: 18px 0 26px; }
+  .copy .lede { font-size: 18px; line-height: 28px; }
+  .feat { margin-top: 38px; display: flex; flex-direction: column; gap: 22px; }
+  .feat .it { display: flex; gap: 16px; }
+  .feat .ic { flex: 0 0 42px; height: 42px; display: grid; place-items: center; font-size: 20px; color: var(--bg-dark); }
+  .feat .t1 { color: var(--fg-alt); font-size: 16px; }
+  .feat .t2 { color: var(--base4); font-size: 14px; line-height: 21px; margin-top: 3px; }
+  .lisp { margin-top: 44px; background: rgba(19,20,28,0.85); border: 1px solid var(--base0); padding: 16px 18px; font-size: 14px; line-height: 21px; white-space: pre; }
+</style>
+</head>
+<body>
+<div class="wallpaper"></div>
+
+<div class="wmbar">
+  <div class="square">&#xf303;</div>
+  <div class="dots"><span></span><span class="on"></span><span></span><span></span><span></span></div>
+  <div class="stat"><span>&#xf1eb; Neero</span><span>&#xf028; 100%</span><span>&#xf017; 11:42 PM</span></div>
+  <div class="square">&#xf011;</div>
+</div>
+
+<div class="frame lsp">
+  <div class="buffer code ed">
+<div class="ln"><span class="n">1</span><span class="p">import</span> { <span class="v">readFile</span> } <span class="p">from</span> <span class="s">"fs/promises"</span>;</div>
+<div class="ln"><span class="n">2</span></div>
+<div class="ln"><span class="n">3</span><span class="k">interface</span> <span class="v">Note</span> {</div>
+<div class="ln"><span class="n">4</span>  <span class="g">title</span>: <span class="t">string</span>;</div>
+<div class="ln"><span class="n">5</span>  <span class="g">tags</span>: <span class="t">string</span>[];</div>
+<div class="ln"><span class="n">6</span>  <span class="g">updated</span>: <span class="v">Date</span>;</div>
+<div class="ln"><span class="n">7</span>}</div>
+<div class="ln"><span class="n">8</span></div>
+<div class="ln"><span class="n">9</span><span class="p">export</span> <span class="k">async function</span> <span class="f">loadNotes</span>(<span class="y">dir</span>: <span class="t">string</span>): <span class="v">Promise</span>&lt;<span class="v">Note</span>[]&gt; {</div>
+<div class="ln gut-mod"><span class="n">10</span>  <span class="k">const</span> <span class="v">files</span> = <span class="k">await</span> <span class="squig"><span class="f">listOrgFiles</span></span>(dir);<span class="side err"><span class="tag">&#xf057; Cannot find name 'listOrgFiles'. ts(2304)</span></span></div>
+<div class="ln gut-mod"><span class="n">11</span>  <span class="k">return</span> <span class="v">Promise</span>.<span class="f">all</span>(files.<span class="f">map</span>(<span class="k">async</span> (<span class="y">file</span>) <span class="k">=&gt;</span> {<span class="side act"><span class="tag">&#xf0eb; Add missing function declaration 'listOrgFiles'</span></span></div>
+<div class="ln"><span class="n">12</span>    <span class="k">const</span> <span class="v">raw</span> = <span class="k">await</span> <span class="f">readFile</span>(file, <span class="s">"utf8"</span>);<span class="side hov"><span class="tag">const raw: string</span></span></div>
+<div class="ln"><span class="n">13</span>    <span class="k">return</span> <span class="f">parseNote</span>(raw);</div>
+<div class="ln"><span class="n">14</span>  }));</div>
+<div class="ln"><span class="n">15</span>}</div>
+<div class="ln"><span class="n">16</span></div>
+<div class="ln gut-add"><span class="n">17</span><span class="p">export</span> <span class="k">function</span> <span class="f">byTag</span>(<span class="y">notes</span>: <span class="v">Note</span>[], <span class="y">tag</span>: <span class="t">string</span>) {</div>
+<div class="ln gut-add"><span class="n">18</span>  <span class="k">return</span> notes</div>
+<div class="ln gut-add"><span class="n">19</span>    .<span class="f">filter</span>((<span class="y">n</span>) <span class="k">=&gt;</span> n.<span class="p">tags</span>.<span class="f">includes</span>(tag))<span class="side hov"><span class="tag">(method) Array&lt;Note&gt;.filter(predicate): Note[]</span></span></div>
+<div class="ln gut-add cur"><span class="n">20</span>    .<span class="f">sort</span>((<span class="y">a</span>, <span class="y">b</span>) <span class="k">=&gt;</span> b.<span class="p">updated</span>.<span class="f">getT</span><span class="cursor">i</span></div>
+<div class="ln gut-add"><span class="n">21</span>}</div>
+<div class="ln"><span class="n">22</span></div>
+<div class="ln"><span class="n">23</span><span class="k">function</span> <span class="f">parseNote</span>(<span class="y">raw</span>: <span class="t">string</span>): <span class="v">Note</span> {</div>
+<div class="ln"><span class="n">24</span>  <span class="k">const</span> [<span class="v">header</span>, ...<span class="v">body</span>] = raw.<span class="f">split</span>(<span class="s">"\n"</span>);</div>
+<div class="ln"><span class="n">25</span>  <span class="k">return</span> {</div>
+<div class="ln"><span class="n">26</span>    <span class="g">title</span>: header.<span class="f">replace</span>(<span class="s">/^#\+title:\s*/</span>, <span class="s">""</span>),</div>
+<div class="ln"><span class="n">27</span>    <span class="g">tags</span>: body.<span class="f">filter</span>((<span class="y">l</span>) <span class="k">=&gt;</span> l.<span class="f">startsWith</span>(<span class="s">"#+filetags"</span>)),</div>
+<div class="ln"><span class="n">28</span>    <span class="g">updated</span>: <span class="k">new</span> <span class="v">Date</span>(),</div>
+<div class="ln"><span class="n">29</span>  };</div>
+  </div>
+
+  <!-- completion popup -->
+  <div class="company">
+    <div class="sel"><span class="ic">&#xf1b2;</span><span class="m">getTi</span>me<span class="ty">() =&gt; number</span></div>
+    <div><span class="ic">&#xf1b2;</span><span class="m">getTi</span>mezoneOffset<span class="ty">() =&gt; number</span></div>
+    <div><span class="ic">&#xf1b2;</span><span class="m">get</span>UTC<span class="m">Ti</span>me<span class="ty">&#8230;</span></div>
+  </div>
+
+  <!-- lsp-ui-doc, positioned at the bottom -->
+  <div class="doc">
+    <div class="sig"><span class="k">(method)</span> <span class="v">Date</span>.<span class="f">getTime</span>(): <span class="t">number</span></div>
+    <hr>
+    <div class="body">Returns the stored time value in milliseconds since midnight, January 1, 1970 UTC.</div>
+    <div class="c" style="margin-top:12px">&#xf15c; lib.es5.d.ts &middot; lsp-ui-doc</div>
+  </div>
+
+  <div class="modeline" style="left:0;right:0;bottom:24px"><span class="pill insert">INSERT</span><span class="file"><span class="dir">notes-api/src/</span>notes.ts</span><span class="right"><span class="vcs">&#xe0a0; main</span><span class="b">&#xf057; 1</span><span class="ok">&#xf135;</span></span></div>
+  <div class="echo" style="left:0;right:0;bottom:0;color:var(--base4)">LSP :: Connected to [ts-ls:48213/starting /home/josh/sync/projects/notes-api].</div>
+</div>
+
+<div class="copy">
+  <div class="kicker">Josh's Pretty Cool Emacs Config</div>
+  <div class="title">An editor that <span class="accent">reads along</span> with you.</div>
+  <div class="lede">lsp-mode and lsp-ui wired straight into every JavaScript and TypeScript buffer.</div>
+
+  <div class="feat">
+    <div class="it"><div class="ic" style="background:var(--red)">&#xf057;</div><div><div class="t1">Diagnostics in the sideline</div><div class="t2">Errors sit right beside the line that caused them.</div></div></div>
+    <div class="it"><div class="ic" style="background:var(--yellow)">&#xf0eb;</div><div><div class="t1">Inline code actions</div><div class="t2">Quick fixes are offered without leaving the buffer.</div></div></div>
+    <div class="it"><div class="ic" style="background:var(--blue)">&#xf02d;</div><div><div class="t1">Docs that follow the cursor</div><div class="t2">Hover info pinned to the bottom of the frame.</div></div></div>
+  </div>
+
+  <div class="lisp">(<span class="b">use-package</span> lsp-ui
+  <span class="nm">:hook</span> (lsp-mode . lsp-ui-mode)
+  <span class="nm">:config</span>
+  (<span class="k">setq</span> lsp-ui-doc-position 'bottom)
+  (<span class="k">setq</span> lsp-ui-sideline-show-hover t))</div>
+</div>
+</body>
+</html>

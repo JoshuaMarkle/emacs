@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="style.css">
+<style>
+  .hero { position: absolute; left: 110px; top: 170px; width: 760px; }
+  .hero .logo { width: 150px; margin-bottom: 34px; filter: drop-shadow(0 10px 30px rgba(122,162,247,0.25)); }
+  .hero .title { font-size: 76px; line-height: 84px; margin: 18px 0 28px; }
+  .hero .lede { width: 640px; }
+
+  .modes { margin-top: 54px; }
+  .modes .label { font-size: 13px; color: var(--base4); letter-spacing: 2px; margin-bottom: 14px; }
+  .modes .row { display: flex; flex-wrap: wrap; gap: 10px; width: 640px; }
+  .modes .pill { margin: 0; font-size: 15px; padding: 6px 12px; }
+
+  .stack-back { left: 1010px; top: 150px; width: 820px; height: 640px; opacity: 0.55; transform: rotate(3deg); }
+  .stack-front { left: 930px; top: 230px; width: 860px; height: 700px; }
+
+  .dash { position: absolute; inset: 0 0 58px 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+  .dash img { width: 210px; margin-bottom: 44px; }
+  .menu { font-size: 14px; }
+  .menu .item { display: flex; width: 400px; height: 34px; align-items: center; }
+  .menu .item .icon { color: var(--magenta); width: 18px; }
+  .menu .item .txt { color: var(--magenta); }
+  .menu .item .kb { margin-left: auto; width: 80px; color: var(--orange); }
+  .menu .item:first-child .txt span { background: var(--cyan); color: var(--bg); }
+  .loaded { margin-top: 34px; color: var(--base1); font-size: 13px; }
+</style>
+</head>
+<body>
+<div class="wallpaper"></div>
+
+<div class="hero">
+  <img class="logo" src="emacs.png">
+  <div class="kicker">DOOM Emacs &middot; Vim motions &middot; Tokyo Night</div>
+  <div class="title">Josh's Pretty Cool <span class="accent">Emacs</span> Config</div>
+  <div class="lede">A minimal, keyboard-first setup for the day-to-day of a CS major: note taking, competitive programming, and a hand-tuned Tokyo Night theme.</div>
+
+  <div class="modes">
+    <div class="label">CUSTOM MODELINE &mdash; EVERY VIM STATE GETS A COLOR</div>
+    <div class="row">
+      <span class="pill normal">NORMAL</span>
+      <span class="pill insert">INSERT</span>
+      <span class="pill visual">VISUAL</span>
+      <span class="pill replace">REPLACE</span>
+      <span class="pill motion">MOTION</span>
+      <span class="pill operator">OPERATOR</span>
+      <span class="pill emacs">EMACS</span>
+    </div>
+  </div>
+</div>
+
+<!-- Back window: config.el -->
+<div class="frame stack-back">
+  <div class="buffer code" style="inset:0 0 34px 0; background:var(--bg);">
+<div class="ln"><span class="n">1</span><span class="c">;;; Josh's Pretty Cool Emacs Config</span></div>
+<div class="ln"><span class="n">2</span></div>
+<div class="ln"><span class="n">3</span><span class="c">;; Theme</span></div>
+<div class="ln"><span class="n">4</span>(<span class="b">use-package</span> doom-themes</div>
+<div class="ln"><span class="n">5</span>    <span class="nm">:ensure</span> t</div>
+<div class="ln"><span class="n">6</span>    <span class="nm">:config</span></div>
+<div class="ln"><span class="n">7</span>    (<span class="b">load-theme</span> 'tokyo-night t))</div>
+<div class="ln"><span class="n">8</span></div>
+<div class="ln"><span class="n">9</span><span class="c">;; Fonts</span></div>
+<div class="ln"><span class="n">10</span>(<span class="k">setq</span> doom-font (<span class="b">font-spec</span> <span class="nm">:family</span> <span class="s">"CaskaydiaMono Nerd Font"</span> <span class="nm">:size</span> 13))</div>
+<div class="ln"><span class="n">11</span></div>
+<div class="ln"><span class="n">12</span><span class="c">;; Modeline</span></div>
+<div class="ln"><span class="n">13</span>(<span class="k">setq</span> doom-modeline-height 35</div>
+<div class="ln"><span class="n">14</span>    doom-modeline-mode-icon nil</div>
+<div class="ln"><span class="n">15</span>    size-indication-mode nil</div>
+<div class="ln"><span class="n">16</span>    column-number-mode nil)</div>
+  </div>
+  <div class="modeline inactive" style="left:0;right:0;bottom:0"><span class="pill normal">NORMAL</span><span class="file">doom/config.el</span></div>
+</div>
+
+<!-- Front window: dashboard -->
+<div class="frame stack-front">
+  <div class="dash">
+    <img src="emacs.png">
+    <div class="menu">
+      <div class="item"><span class="icon">&#xf15c;</span><span class="txt"><span>R</span>ecently opened files</span><span class="kb">SPC f r</span></div>
+      <div class="item"><span class="icon">&#xf073;</span><span class="txt">Open org-agenda</span><span class="kb">SPC o A</span></div>
+      <div class="item"><span class="icon">&#xf0b1;</span><span class="txt">Open project</span><span class="kb">SPC p p</span></div>
+      <div class="item"><span class="icon">&#xf02e;</span><span class="txt">Jump to bookmark</span><span class="kb">SPC RET</span></div>
+      <div class="item"><span class="icon">&#xf013;</span><span class="txt">Open private configuration</span><span class="kb">SPC f P</span></div>
+      <div class="item"><span class="icon">&#xf02d;</span><span class="txt">Open documentation</span><span class="kb">SPC h d h</span></div>
+    </div>
+    <div class="loaded">Doom loaded 262 packages across 49 modules in 0.324s</div>
+  </div>
+  <div class="modeline" style="left:0;right:0;bottom:24px"><span class="pill normal">NORMAL</span><span class="file">~/.config/doom/</span></div>
+  <div class="echo" style="left:0;right:0;bottom:0">Recently opened files (<span class="nm">recentf-open-files</span>)</div>
+</div>
+</body>
+</html>

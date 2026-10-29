@@ -1,0 +1,163 @@
+/* Shared styles for promo images — palette from themes/tokyo-night-theme.el */
+:root {
+  --bg: #1a1b26;
+  --bg-alt: #13141c;
+  --bg-dark: #16161e;
+  --modeline: #16161f;
+  --linenr-bg: #181923;
+  --base0: #414868;
+  --base1: #51587a;
+  --base4: #8189af;
+  --fg: #a9b1d6;
+  --fg-alt: #c0caf5;
+  --red: #f7768e;
+  --orange: #ff9e64;
+  --yellow: #e0af68;
+  --dgreen: #9ece6a;
+  --green: #73daca;
+  --teal: #2ac3de;
+  --dcyan: #7dcfff;
+  --cyan: #b4f9f8;
+  --blue: #7aa2f7;
+  --magenta: #bb9af7;
+  --violet: #9aa5ce;
+  --purple: #9d7cd8;
+  --opcyan: #0db9d7;
+  --font: "CaskaydiaMono Nerd Font", "JetBrains Mono", monospace;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  width: 1920px;
+  height: 1080px;
+  overflow: hidden;
+  font-family: var(--font);
+  color: var(--fg);
+  background: #0f0f17;
+}
+
+/* Wallpaper: dark violet foliage glow, standing in for the desktop background */
+.wallpaper {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 900px 600px at 8% 10%, rgba(122, 90, 190, 0.35), transparent 70%),
+    radial-gradient(ellipse 700px 700px at 95% 95%, rgba(90, 70, 160, 0.35), transparent 70%),
+    radial-gradient(ellipse 600px 400px at 85% 5%, rgba(60, 80, 150, 0.30), transparent 70%),
+    radial-gradient(ellipse 600px 500px at 10% 100%, rgba(122, 162, 247, 0.12), transparent 70%),
+    linear-gradient(160deg, #16152a 0%, #0f0f17 55%, #15132a 100%);
+}
+.wallpaper::after {
+  content: ""; position: absolute; inset: 0;
+  background-image:
+    repeating-linear-gradient(115deg, rgba(187,154,247,0.035) 0 2px, transparent 2px 46px),
+    repeating-linear-gradient(35deg, rgba(122,162,247,0.03) 0 2px, transparent 2px 60px);
+}
+
+/* Window manager bar (from the screenshots) */
+.wmbar {
+  position: absolute; left: 22px; right: 22px; top: 18px; height: 40px;
+  display: flex; align-items: center; font-size: 13px; color: var(--fg-alt);
+}
+.wmbar .square { width: 38px; height: 40px; background: var(--blue); color: var(--bg-dark);
+  display: grid; place-items: center; font-size: 17px; }
+.wmbar .dots { display: flex; gap: 14px; margin-left: 20px; }
+.wmbar .dots span { width: 9px; height: 9px; border-radius: 50%; border: 1.5px solid var(--fg-alt); }
+.wmbar .dots span.on { background: var(--fg-alt); }
+.wmbar .stat { margin-left: auto; display: flex; gap: 22px; margin-right: 22px; }
+
+/* Emacs frame */
+.frame {
+  position: absolute;
+  background: var(--bg);
+  border: 2px solid #6b7399;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.55);
+  overflow: hidden;
+  font-size: 14px;
+  line-height: 17px;
+}
+
+/* Buffers */
+.buffer { position: absolute; overflow: hidden; background: var(--bg); }
+.code { padding-top: 6px; }
+.code .ln { display: block; white-space: pre; min-height: 1lh; }
+.code .n {
+  display: inline-block; width: 40px; padding-right: 8px; text-align: right; color: var(--base1);
+  font-style: italic;
+}
+.code .cur { background: #1f2030; }
+.code .cur .n { color: var(--fg-alt); }
+.gut-mod { box-shadow: inset 3px 0 0 var(--orange); }
+.gut-add { box-shadow: inset 3px 0 0 var(--green); }
+
+/* Syntax */
+.c  { color: var(--base1); }
+.k  { color: var(--magenta); }
+.f  { color: var(--blue); }
+.s  { color: var(--dgreen); }
+.nm { color: var(--orange); }
+.t  { color: var(--teal); }
+.p  { color: var(--dcyan); }
+.v  { color: var(--fg-alt); }
+.b  { color: var(--red); }
+.y  { color: var(--yellow); }
+.g  { color: var(--green); }
+.cursor { background: var(--cyan); color: var(--bg); }
+.hl { background: #2e3c64; color: var(--fg-alt); }
+
+/* Modeline */
+.modeline {
+  position: absolute; height: 34px; background: var(--modeline);
+  display: flex; align-items: center; font-size: 13px; padding-right: 14px;
+  border-left: 4px solid var(--blue);
+}
+.modeline.inactive { border-left-color: transparent; }
+.modeline .file { margin-left: 14px; color: var(--fg); }
+.modeline .file .dir { color: var(--blue); }
+.modeline .right { margin-left: auto; display: flex; gap: 14px; align-items: center; color: var(--fg); }
+.modeline .right .vcs { color: var(--fg); }
+.modeline .right .ok { color: var(--green); }
+
+.pill {
+  display: inline-block; padding: 2px 8px; margin-left: 14px;
+  color: var(--bg-dark); font-size: 13px; line-height: 17px; letter-spacing: 0.5px;
+}
+.pill.normal   { background: var(--blue); }
+.pill.insert   { background: var(--dgreen); }
+.pill.visual   { background: var(--magenta); }
+.pill.replace  { background: var(--red); }
+.pill.motion   { background: var(--orange); }
+.pill.operator { background: var(--opcyan); }
+.pill.emacs    { background: var(--purple); }
+
+.echo { position: absolute; height: 24px; font-size: 13px; padding-left: 10px; line-height: 24px; color: var(--fg-alt); }
+
+.vsplit { position: absolute; width: 2px; background: #22232f; }
+
+/* Promo typography */
+.title {
+  font-family: var(--font);
+  color: var(--fg-alt);
+  font-weight: 700;
+  letter-spacing: -1px;
+}
+.title .accent { color: var(--blue); }
+.kicker { color: var(--magenta); letter-spacing: 4px; text-transform: uppercase; font-size: 15px; }
+.lede { color: var(--violet); font-size: 20px; line-height: 30px; }
+
+.key {
+  display: inline-block; padding: 3px 10px; border-radius: 4px;
+  background: var(--bg-dark); border: 1px solid var(--base0);
+  border-bottom-width: 3px; color: var(--orange); font-size: 16px; line-height: 20px;
+}
+
+.callout {
+  position: absolute; background: rgba(22,22,30,0.92); border: 1px solid var(--base0);
+  padding: 14px 18px; font-size: 15px; line-height: 22px; color: var(--fg);
+  box-shadow: 0 18px 40px rgba(0,0,0,0.5);
+}
+.callout .num {
+  display: inline-grid; place-items: center; width: 26px; height: 26px; margin-right: 10px;
+  background: var(--blue); color: var(--bg-dark); font-weight: 700;
+}
+.callout b { color: var(--fg-alt); font-weight: 600; }

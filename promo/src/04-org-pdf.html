@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="style.css">
+<style>
+  .head { position: absolute; left: 70px; top: 60px; width: 900px; }
+  .head .title { font-size: 54px; line-height: 62px; margin-top: 16px; }
+  .head .lede { margin-top: 18px; font-size: 18px; line-height: 28px; width: 780px; }
+
+  .frame.org { left: 60px; top: 330px; width: 900px; height: 712px; font-size: 16px; line-height: 23px; }
+  .frame.org .ed { left: 0; top: 0; right: 0; height: 654px; padding: 14px 22px; white-space: pre; }
+  .ed div { min-height: 1lh; }
+  .kw { color: var(--base1); }
+  .h1 { color: var(--blue); font-weight: 700; }
+  .h2 { color: var(--magenta); font-weight: 700; }
+  .star { color: var(--base1); font-weight: 400; }
+  .tag { color: var(--base1); }
+  .math { color: var(--orange); }
+  .src { background: #1f2030; }
+  .lst { color: var(--yellow); }
+
+  /* "SPC n e" connector between the buffer and the PDF */
+  .bridge { position: absolute; left: 970px; width: 170px; top: 590px; z-index: 5; display: flex; flex-direction: column; align-items: center; gap: 10px; }
+  .bridge .chip { background: var(--blue); color: var(--bg-dark); padding: 12px 18px; font-size: 20px; font-weight: 700; box-shadow: 0 14px 40px rgba(122,162,247,0.35); }
+  .bridge .via { background: rgba(19,20,28,0.95); border: 1px solid var(--base0); padding: 8px 12px; font-size: 13px; line-height: 20px; color: var(--violet); text-align: center; }
+
+  /* The exported PDF, using the custom "notes" class look */
+  .pdf {
+    position: absolute; left: 1150px; top: 70px; width: 700px; height: 940px;
+    background: #fdfcf8; color: #1d1d22; transform: rotate(2.2deg);
+    box-shadow: 0 40px 90px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.08);
+    padding: 70px 76px; font-family: "FreeSerif", "Noto Serif", serif; font-size: 17px; line-height: 25px;
+  }
+  .pdf .viewer { position: absolute; left: 0; right: 0; top: -38px; height: 38px; background: #16161e; color: var(--fg); font-family: var(--font); font-size: 13px; display: flex; align-items: center; padding: 0 14px; gap: 10px; }
+  .pdf .viewer .r { margin-left: auto; color: var(--base4); }
+  .pdf h1 { font-weight: 400; font-size: 32px; text-align: center; margin-bottom: 6px; }
+  .pdf .meta { text-align: center; font-size: 15px; color: #555; margin-bottom: 34px; }
+  .pdf .rule { border-top: 1.2px solid #1d1d22; margin: -18px 0 26px; }
+  .pdf h2 { font-size: 21px; margin: 22px 0 10px; color: #23305e; }
+  .pdf h3 { font-size: 17px; margin: 18px 0 8px; color: #23305e; }
+  .pdf .num { margin-right: 14px; }
+  .pdf p { text-align: justify; }
+  .pdf .eq { text-align: center; font-family: "DejaVu Math TeX Gyre", serif; font-size: 19px; margin: 14px 0; }
+  .pdf .eq i { font-family: "FreeSerif", serif; font-style: italic; }
+  .pdf ol { margin-left: 30px; }
+  .pdf ol li { margin: 4px 0; }
+  .pdf i.m { font-style: italic; }
+  .pdf .minted {
+    margin: 12px 0; padding: 12px 16px; background: #f1f1f6; border-left: 3px solid #7aa2f7;
+    font-family: var(--font); font-size: 14px; line-height: 21px; white-space: pre; color: #343b58;
+  }
+  .pdf .minted .k { color: #5a4a78; } .pdf .minted .s { color: #485e30; } .pdf .minted .nm { color: #965027; } .pdf .minted .f { color: #34548a; }
+  .pdf table.bt { margin: 10px auto; border-collapse: collapse; border-top: 1.5px solid #1d1d22; border-bottom: 1.5px solid #1d1d22; }
+  .pdf table.bt th { border-bottom: 1px solid #1d1d22; font-weight: 400; }
+  .pdf table.bt th, .pdf table.bt td { padding: 3px 26px; text-align: center; }
+  .pdf .foot { position: absolute; bottom: 40px; left: 0; right: 0; text-align: center; font-size: 14px; }
+</style>
+</head>
+<body>
+<div class="wallpaper"></div>
+
+<div class="head">
+  <div class="kicker">Josh's Pretty Cool Emacs Config</div>
+  <div class="title">Take notes in <span class="accent">Org</span>.<br>Hand in a PDF.</div>
+  <div class="lede">A custom LaTeX class, XeLaTeX for real fonts, and minted for highlighted code, all behind one leader key.</div>
+</div>
+
+<div class="frame org">
+  <div class="buffer ed"><div><span class="kw">#+title:</span> <span class="v" style="font-weight:700">Linear Algebra, Week 6</span></div><div><span class="kw">#+latex_class: notes</span></div><div><span class="kw">#+filetags: :math:school:</span></div><div></div><div class="h1"><span class="star">*</span> Eigenvalues</div><div>An <b class="v">eigenvector</b> of A is a nonzero vector v where</div><div><span class="math">\[ A\mathbf{v} = \lambda\mathbf{v} \]</span></div><div></div><div class="h2"><span class="star">**</span> Finding them</div><div><span class="lst">1.</span> Solve <span class="math">$\det(A - \lambda I) = 0$</span> for each <span class="math">$\lambda$</span></div><div><span class="lst">2.</span> Find the null space of <span class="math">$A - \lambda I$</span></div><div></div><div class="h2"><span class="star">**</span> Check it numerically</div><div class="src"><span class="kw">#+begin_src python</span></div><div class="src"><span class="k">import</span> numpy <span class="k">as</span> np</div><div class="src">A = np.<span class="f">array</span>([[<span class="nm">2</span>, <span class="nm">1</span>], [<span class="nm">0</span>, <span class="nm">3</span>]])</div><div class="src">vals, vecs = np.linalg.<span class="f">eig</span>(A)<span class="cursor"> </span></div><div class="src"><span class="kw">#+end_src</span></div><div></div><div class="h2"><span class="star">**</span> Results</div><div><span class="p">| λ | eigenvector |</span></div><div><span class="p">|---+-------------|</span></div><div><span class="p">| </span><span class="nm">2</span><span class="p"> | (1, 0)      |</span></div><div><span class="p">| </span><span class="nm">3</span><span class="p"> | (1, 1)      |</span></div><div></div><div class="h1"><span class="star">*</span> Diagonalization <span class="tag">                         :exam:</span></div><div>With n independent eigenvectors, <span class="math">$A = PDP^{-1}$</span>.</div></div>
+  <div class="modeline" style="left:0;right:0;bottom:24px"><span class="pill normal">NORMAL</span><span class="file"><span class="dir">school/</span>linalg-week6.org</span><span class="right"><span class="vcs">&#xe0a0; main</span><span class="ok">&#xf058;</span></span></div>
+  <div class="echo" style="left:0;right:0;bottom:0">Processing LaTeX file ./linalg-week6.tex...</div>
+</div>
+
+<div class="bridge">
+  <div class="chip">SPC n e</div>
+  <div class="via">xelatex<br>minted<br>notes.cls</div>
+</div>
+
+<div class="pdf">
+  <div class="viewer"><span>&#xf1c1;</span><span>linalg-week6.pdf</span><span class="r">1 / 3</span></div>
+  <h1>Linear Algebra, Week 6</h1>
+  <div class="meta">Joshua Markle</div>
+  <div class="rule"></div>
+
+  <h2><span class="num">1</span>Eigenvalues</h2>
+  <p>An <b>eigenvector</b> of <i class="m">A</i> is a nonzero vector <b>v</b> where</p>
+  <div class="eq"><i>A</i><b>v</b> = <i>λ</i><b>v</b></div>
+
+  <h3><span class="num">1.1</span>Finding them</h3>
+  <ol>
+    <li>Solve det(<i class="m">A</i> − <i class="m">λI</i>) = 0 for each <i class="m">λ</i></li>
+    <li>Find the null space of <i class="m">A</i> − <i class="m">λI</i></li>
+  </ol>
+
+  <h3><span class="num">1.2</span>Check it numerically</h3>
+<div class="minted"><span class="k">import</span> numpy <span class="k">as</span> np
+A = np.<span class="f">array</span>([[<span class="nm">2</span>, <span class="nm">1</span>], [<span class="nm">0</span>, <span class="nm">3</span>]])
+vals, vecs = np.linalg.<span class="f">eig</span>(A)</div>
+
+  <h3><span class="num">1.3</span>Results</h3>
+  <table class="bt"><tr><th><i class="m">λ</i></th><th>eigenvector</th></tr><tr><td>2</td><td>(1, 0)</td></tr><tr><td>3</td><td>(1, 1)</td></tr></table>
+
+  <h2><span class="num">2</span>Diagonalization</h2>
+  <p>With <i class="m">n</i> independent eigenvectors, <i class="m">A</i> = <i class="m">PDP</i><sup>−1</sup>.</p>
+
+  <div class="foot">1</div>
+</div>
+</body>
+</html>

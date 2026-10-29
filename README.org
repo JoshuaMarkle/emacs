@@ -2,6 +2,10 @@
 
 This [[file:config.org][configuration]] is centered around *DOOM Emacs* because *Vim Motions* are awesome. This is mainly used for the day to day of a CS major.
 
+[[https://github.com/JoshuaMarkle/emacs/blob/main/promo/01-dashboard.png]]
+[[https://github.com/JoshuaMarkle/emacs/blob/main/promo/02-competitive.png]]
+[[https://github.com/JoshuaMarkle/emacs/blob/main/promo/03-lsp.png]]
+[[https://github.com/JoshuaMarkle/emacs/blob/main/promo/04-org-pdf.png]]
 [[https://github.com/JoshuaMarkle/emacs/blob/main/docs/screenshot1.png]]
 [[https://github.com/JoshuaMarkle/emacs/blob/main/docs/screenshot3.png]]
 
