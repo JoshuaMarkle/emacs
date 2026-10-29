@@ -6,8 +6,6 @@ This [[file:config.org][configuration]] is centered around *DOOM Emacs* because 
 [[https://github.com/JoshuaMarkle/emacs/blob/main/promo/02-competitive.png]]
 [[https://github.com/JoshuaMarkle/emacs/blob/main/promo/03-lsp.png]]
 [[https://github.com/JoshuaMarkle/emacs/blob/main/promo/04-org-pdf.png]]
-[[https://github.com/JoshuaMarkle/emacs/blob/main/docs/screenshot1.png]]
-[[https://github.com/JoshuaMarkle/emacs/blob/main/docs/screenshot3.png]]
 
 * Current State of This Configuration 🚧
 
